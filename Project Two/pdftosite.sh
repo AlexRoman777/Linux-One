@@ -42,7 +42,7 @@ checklist() {
     if [ ! -d "$destination" ]; then
         echo "$destination does not exist"
         # Ask the user if they want to create the folder
-        read -p "Do you want to create the folder? [Y/n] " createFolder
+        read -r -p "Do you want to create the folder? [Y/n] " createFolder
         if [[ $createFolder == "n" ]]; then
             exit 1
         fi
