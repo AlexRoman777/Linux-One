@@ -47,9 +47,9 @@ checklist() {
             exit 1
         fi
         # Create the folder
-        mkdir -p "$destination"
-        if [ $? -ne 0 ]; then # If the exit code is not 0, then the folder could not be created
-            echo "Could not create the folder"
+        if ! mkdir -p "$destination";
+        then
+            echo "Could not create $destination"
             exit 1
         fi
     fi
