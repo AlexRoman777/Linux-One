@@ -158,7 +158,7 @@ while :; do
 
     read -s -n 1 a
     [[ "$a" == '' ]] && {
-        read -s -n 1 a
+        read -r -s -n 1 a
         [[ "$a" == '[' ]] && read -s -n 1 a
     }
 
