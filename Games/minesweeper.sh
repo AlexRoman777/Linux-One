@@ -156,10 +156,10 @@ while :; do
     tput 'cup' $((cy + 2)) $((cx * 2))
     echo -en "\e[1;40;37m[${piece[board[cy * mx + cx]]}\e[1;37m]\b\b"
 
-    read -s -n 1 a
+    read -r -s -n 1 a
     [[ "$a" == '' ]] && {
         read -r -s -n 1 a
-        [[ "$a" == '[' ]] && read -s -n 1 a
+        [[ "$a" == '[' ]] && read  -r -s -n 1 a
     }
 
     echo -en "\b ${piece[board[cy * mx + cx]]} \b\b"
