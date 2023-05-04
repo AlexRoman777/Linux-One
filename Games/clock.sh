@@ -55,7 +55,7 @@ init
 
 while :; do
 
-    read -a curr <<<"$(date +'%-S %-M %l')"
+    read -r -a curr <<<"$(date +'%-S %-M %l')"
     curr[2]=$(((curr[2] % 12 * 60 + curr[1]) / 12))
 
     [[ "${last[*]}" == "${curr[*]}" ]] && {

@@ -42,14 +42,14 @@ checklist() {
     if [ ! -d "$destination" ]; then
         echo "$destination does not exist"
         # Ask the user if they want to create the folder
-        read -p "Do you want to create the folder? [Y/n] " createFolder
+        read -r -p "Do you want to create the folder? [Y/n] " createFolder
         if [[ $createFolder == "n" ]]; then
             exit 1
         fi
         # Create the folder
-        mkdir -p "$destination"
-        if [ $? -ne 0 ]; then # If the exit code is not 0, then the folder could not be created
-            echo "Could not create the folder"
+        if ! mkdir -p "$destination";
+        then
+            echo "Could not create $destination"
             exit 1
         fi
     fi
