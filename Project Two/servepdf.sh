@@ -14,23 +14,23 @@ validateArguments() {
         echo "You have $numberOfArguments arguments, but you should have 2 arguments, PDF and port"
         echo 'Please follow the syntax: ./servepdf /path/to/pdf 9003'
 
-        read -p "Do you want to continue, and reenter the arguments? [Y/n] " continue
+        read -r -p "Do you want to continue, and reenter the arguments? [Y/n] " continue
 
         if [[ $continue == "n" ]]; then
             exit 1 # Exit the script
         fi
 
-        read -p "Please enter the path to the PDF-file: " pdfFile # Ask the user to reenter the PDF-file
-        read -p "Please enter the port you want to use, or press enter to use the default port 8000: " portNumber
+        read -r -p "Please enter the path to the PDF-file: " pdfFile # Ask the user to reenter the PDF-file
+        read -r -p "Please enter the port you want to use, or press enter to use the default port 8000: " portNumber
         validateArguments "$pdfFile" "$portNumber" # Call the function again with the new arguments
 
     elif [[ $pdfFileValid != "%PDF" ]]; then # If the variable pdfFile is not equal to "%PDF", then it is not a PDF-file
         echo "$1 is not a PDF-file!"
-        read -p "Do you want to continue and reenter the pdf-file? [Y/n] " continue
+        read -r -p "Do you want to continue and reenter the pdf-file? [Y/n] " continue
         if [[ $continue == "n" ]]; then
             exit 1
         fi
-        read -p "Please enter the path to the PDF-file: " pdfFile
+        read -r -p "Please enter the path to the PDF-file: " pdfFile
         validateArguments "$pdfFile" "$portNumber" # Call the function again with the new arguments
 
     elif [[ -z $portNumber ]]; then # If the variable portNumber is empty, then set the port to 8000
@@ -38,11 +38,11 @@ validateArguments() {
     elif [[ $portNumber -le 1024 || $portNumber -gt 65535 ]]; then
         echo "$portNumber is not a valid port! Please enter a port between 1024 and 65535"
         # Ask the user if he wants to continue and reenter the port or exit
-        read -p "Do you want to continue and reenter the port? [Y/n] " continue
+        read -r -p "Do you want to continue and reenter the port? [Y/n] " continue
         if [[ $continue == "n" ]]; then
             exit 1
         fi
-        read -p "Please enter the port you want to use, or press enter to use the default port 8000: " portNumber
+        read -r -p "Please enter the port you want to use, or press enter to use the default port 8000: " portNumber
         validateArguments "$1" "$portNumber" # Call the function again with the new arguments
     else
         port="$portNumber" # If the port is valid, then set the port to the portNumber
@@ -72,9 +72,7 @@ checkIfPdftoSiteIsPresent() {
 # Convert the PDF-file to a website
 convertPdfToWebsite() {
     echo "Converting... In progress!"
-    ./pdftosite "$1" "$temporaryFolder" >/dev/null 2>&1
-    # Check if the conversion was successful
-    if [[ $? -ne 0 ]]; then # If the exit code is not 0, then the conversion was not successful
+    if ! ./pdftosite "$1" "$temporaryFolder" >/dev/null 2>&1; then
         echo "The conversion was not successful"
         exit 1
     else
